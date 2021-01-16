@@ -20,7 +20,6 @@ import javax.validation.constraints.Min;
 @RestController
 @RequestMapping("/demo/")
 @SpringBootApplication
-@Validated
 public class SpringbootdemoApplication {
 
     @Autowired
@@ -31,16 +30,16 @@ public class SpringbootdemoApplication {
     }
 
     @GetMapping(value = "shike/{str}/{num}")
-    public Integer test(@PathVariable("str") @Length(max = 5) String str, @PathVariable("num") @Min(value = 9) Integer num) {
+    public Integer test(@PathVariable("str") String str, @PathVariable("num") Integer num) {
         System.out.println(testService.getClass());
-        //testService.run(str, num);
+        testService.run(str, num);
         return num;
     }
 
 
 
     @PostMapping(value = "shite")
-    public Integer shite(@RequestBody @Valid Person person) {
+    public Integer shite(@RequestBody @Validated  Person person) {
 
         System.out.println(person.getAge());
         System.out.println(person.getName());

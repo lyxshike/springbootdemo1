@@ -25,15 +25,7 @@ public class ExceptionConfig {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex) {
 
-//        StringBuffer sb = new StringBuffer();
-//
-//        if (!CollectionUtils.isEmpty(ex.getConstraintViolations())) {
-//            ex.getConstraintViolations().stream().forEach( item -> sb.append(item.getMessage()));
-//        }
-
         String message = ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(", "));
-
-
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
@@ -41,9 +33,7 @@ public class ExceptionConfig {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
 
-
         String message = e.getBindingResult().getFieldErrors().stream().map(a -> (a.getField() +": "+ a.getDefaultMessage())).collect(Collectors.joining("; "));
-
       //  String message = e.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(",,,"));
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
